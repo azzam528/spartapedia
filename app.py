@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -16,6 +17,8 @@ DB_NAME = os.environ.get("DB_NAME")
 client = MongoClient(MONGODB_URI)
 db = client[DB_NAME]
 app = Flask(__name__)
+
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -32,7 +35,7 @@ def movie_post():
     og_image = soup.select_one('meta[property="og:image"]')
     og_title = soup.select_one('meta[property="og:title"]')
     og_description = soup.select_one('meta[property="og:description"]')
-    
+
     image = og_image['content']
     title = og_title['content']
     desc = og_description['content']
